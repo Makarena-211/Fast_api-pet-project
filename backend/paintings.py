@@ -33,3 +33,18 @@ def delete_paintings(painting_id: int, db: Session = Depends(get_db)):
     db.delete(painting)
     db.commit()
     return db
+
+@router.get('/{id}', response_model=schema.CreatePainting, status_code=status.HTTP_200_OK)
+def get_by_id(painting_id: int, db:Session = Depends(get_db)):
+    painting = db.query(database.Painting).filter(database.Painting.id == painting_id).first()
+    if painting is None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"NO!")
+    return painting
+
+@router.put('/update/{id}', response_model=schema.CreatePainting)
+def update_painting(update_painting: schema.PaintingBase, painting_id: int, db: Session = Depends(get_db)):
+    updated_painting = db.query(database.Painting).filter(database.Painting.id == painting_id)
+    updated_painting.update(update_painting.dict(), synchronize_session=False)
+    db.commit()
+
+    return updated_painting.first()
