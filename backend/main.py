@@ -1,15 +1,15 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-class Painting(BaseModel):
-    id: int
-    name: str
-    photo: str
-    author: str
-    price: int
-    type: str
+import database
+from config import engine
+import paintings
 app = FastAPI()
 
-data = {'id': 0, 'name':'evening', 'paint':'sdofgodfgndofg', 'author':'Victoria', 'price':245532}
+database.Base.metadata.create_all(bind=engine)
+app.include_router(paintings.router)
+
+
+
 @app.get('/')
-async def main(data):
-    return data
+async def main():
+    return 'hello world'
