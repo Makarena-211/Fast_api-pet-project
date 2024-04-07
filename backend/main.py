@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+import login
 import database
+import database_login
 from config import engine
 import paintings
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,7 +9,9 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 database.Base.metadata.create_all(bind=engine)
+database_login.Base.metadata.create_all(bind=engine)
 app.include_router(paintings.router)
+app.include_router(login.router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,6 +22,4 @@ app.add_middleware(
 )
 
 
-@app.get('/')
-async def main():
-    return 'hello world'
+
