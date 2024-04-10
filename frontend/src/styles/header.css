@@ -31,13 +31,14 @@ nav ul li {
     margin-right: 40px; 
 }
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-body{
+main{
     font-family: Montserrat, sans-serif;
 }
   
 h1{
-    font-size: 70px;
+    font-size: 60px;
     font-weight: 800;
+    margin-left: 40px;
 }
 
 a{
@@ -48,9 +49,11 @@ a{
     color: inherit;
 }
 .logo{
-    height: 80px;
-    width: 80px;
-    margin-left: 20px;
+    height: 70px;
+    width: 70px;
+    align-items: center;
+    margin-top: 10px;
+  
 }
 
 .icon{
@@ -71,12 +74,12 @@ a{
   .painting-item {
     display: flex;
     border-bottom: 1px solid #ccc;
-    margin-top: 10px;
+    margin-top: 50px;
 
   }
   
   .painting-details {
-    margin-left: 10px;
+    margin-left: 50px;
     flex: 1;
   }
   
@@ -88,8 +91,8 @@ a{
   }
   
   .painting-image {
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-right: 50px;
+    margin-bottom: 50px;
     width: 200px;
     order: 2;
   }

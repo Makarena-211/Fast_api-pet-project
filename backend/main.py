@@ -3,6 +3,7 @@ import login
 import database
 import database_login
 from config import engine
+
 import paintings
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -15,11 +16,10 @@ app.include_router(login.router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "http://localhost:3000/login"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["*"],
-)
+    allow_headers=["*"])
 
 
 
