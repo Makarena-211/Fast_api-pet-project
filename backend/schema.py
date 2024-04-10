@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-
 class PaintingBase(BaseModel):
     id: int
     name: str
@@ -14,6 +13,7 @@ class PaintingBase(BaseModel):
 class CreatePainting(PaintingBase):
     class Config:
         orm_mode = True
+
 
 
 

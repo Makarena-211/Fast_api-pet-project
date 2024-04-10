@@ -4,6 +4,7 @@ import settingsIcon from './photos/settings-svgrepo-com.svg';
 import accountIcon from './photos/account-svgrepo-com.svg'
 import logo from './photos/logo.jpg'
 import PaintingItem from "./PaintingItem.js";
+import {jwtDecode} from "jwt-decode";
 
 
 
@@ -58,39 +59,58 @@ function Homepage() {
       setIsModalOpen(false); // Установка состояния для закрытия модального окна
     };
 
+
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      
+      if (token){
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.role === "admin"){
+          setIsAdmin(true);
+        }
+
+      }
+    }, [])
+    
+
   
     return (
-      <body>
-        <header className={`header ${scrollDirection === "down" ? "hide" : ""}`}>
-          <h1>Paintlog<img src={logo} className="logo" /></h1>
-          <nav>
-            <ul className="nav-list">
-              <li><a href="#">Add</a></li>
-              <li><a href="#">Ссылка 2</a></li>
-              <li><a href="#">Ссылка 3</a></li>
-              <li><img src={settingsIcon} className="icon" /></li>
-              <li><img src={accountIcon} className="icon" /></li>
-            </ul>
-          </nav>
-        </header>
-        <div className="main">
-          <div className="paintings-container">
-            {paintings.map((painting) => (
-              <div key={painting.id} className="painting-item" onClick={() => openPaintingItem(painting)}> 
-                <div className="painting-details">
-                  <h2>{painting.name}</h2>
-                  <p>Автор: {painting.author}</p>
-                  <p>Тип: {painting.type}</p>
-                </div>
-                <img src={painting.photo} alt={painting.name} className="painting-image" />
+      <div className="base">
+      <header className={`header ${scrollDirection === "down" ? "hide" : ""}`}>
+        <h1>Paintlog</h1>
+        <img src={logo} className="logo" />
+        <nav>
+          <ul className="nav-list">
+            {isAdmin && <li><a href="/create">Add</a></li>}
+            <li><a href="#">Ссылка 2</a></li>
+            <li><a href="#">Ссылка 3</a></li>
+            <li><img src={settingsIcon} className="icon" /></li>
+            <li><a href="/auth"><img src={accountIcon} className="icon" /></a></li>
+          </ul>
+        </nav>
+      </header>
+      <div className="main">
+        <div className="paintings-container">
+          {paintings.map((painting) => (
+            <div key={painting.id} className="painting-item" onClick={() => openPaintingItem(painting)}> 
+              <div className="painting-details">
+                <h2>{painting.name}</h2>
+                <p>Автор: {painting.author}</p>
+                <p>Тип: {painting.type}</p>
               </div>
-            ))}
-          </div>  
-        </div>
-        {isModalOpen && selectedPainting && (
-          <PaintingItem painting={selectedPainting} onClose={closePaintingItem} />
-        )}
-      </body>
+              <img src={painting.photo} alt={painting.name} className="painting-image" />
+
+              
+            </div>
+          ))}
+        </div>  
+      </div>
+      {isModalOpen && selectedPainting && (
+        <PaintingItem painting={selectedPainting} onClose={closePaintingItem} />
+      )}
+    </div>
     );
   }
   
