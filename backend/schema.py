@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 class PaintingBase(BaseModel):
-    id: int
     name: str
     photo: str
     author: str

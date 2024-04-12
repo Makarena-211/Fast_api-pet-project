@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 import './styles/auth.css';
 
 const Createpage= () => {
@@ -11,10 +13,24 @@ const Createpage= () => {
         price: "",
         type: "",
     });
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setPaintingData((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+      };
     const handleSubmit = async (event) => {
-        
+    
         event.preventDefault();
-        navigate("/");     
+        try {
+            const response = await axios.post("http://localhost:8000/paintings/create", paintingData);
+            console.log(paintingData);
+            navigate("/");
+          } catch (error) {
+            console.error('Error:', error);
+          }    
     };
 
 
@@ -29,8 +45,8 @@ const Createpage= () => {
                 type="text"
                 id="name"
                 name="name"
-                // value={userData.email}
-                // onChange={handleInputChange}
+                value={paintingData.name}
+                onChange={handleInputChange}
                 required
                 />
             </div>
@@ -40,8 +56,8 @@ const Createpage= () => {
                 type="text"
                 id="photo"
                 name="photo"
-                // value={userData.email}
-                // onChange={handleInputChange}
+                value={paintingData.photo}
+                onChange={handleInputChange}
                 required
                 />
             </div>
@@ -51,8 +67,8 @@ const Createpage= () => {
                 type="text"
                 id="author"
                 name="author"
-                // value={userData.email}
-                // onChange={handleInputChange}
+                value={paintingData.author}
+                onChange={handleInputChange}
                 required
                 />
             </div>
@@ -62,8 +78,8 @@ const Createpage= () => {
                 type="text"
                 id="price"
                 name="price"
-                // value={userData.password}
-                // onChange={handleInputChange}
+                value={paintingData.price}
+                onChange={handleInputChange}
                 required
                 />
             </div>
@@ -73,8 +89,8 @@ const Createpage= () => {
                 type="text"
                 id="type"
                 name="type"
-                // value={userData.password}
-                // onChange={handleInputChange}
+                value={paintingData.type}
+                onChange={handleInputChange}
                 required
                 />
             </div>
