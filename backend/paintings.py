@@ -25,8 +25,8 @@ def create_paintings(painting_create: schema.CreatePainting, db: Session = Depen
     return new_painting
 
 @router.delete('/delete', status_code=status.HTTP_204_NO_CONTENT)
-def delete_paintings(painting_id: int, db: Session = Depends(get_db)):
-    painting = db.query(database.Painting).filter(database.Painting.id == painting_id).first()
+def delete_paintings(painting_photo: dict, db: Session = Depends(get_db)):
+    painting = db.query(database.Painting).filter(database.Painting.photo == painting_photo['painting_photo']).first()
     if painting is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Painting not found")
     db.delete(painting)
