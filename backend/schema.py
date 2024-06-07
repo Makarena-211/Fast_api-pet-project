@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from uuid import UUID
+
 class PaintingBase(BaseModel):
     name: str
     photo: str
@@ -14,5 +16,8 @@ class CreatePainting(PaintingBase):
         orm_mode = True
 
 
-
+class PaintingResponse(PaintingBase):
+    id: UUID
+    class Config:
+        orm_mode = True
 

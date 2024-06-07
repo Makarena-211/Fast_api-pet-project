@@ -5,6 +5,7 @@ from sqlalchemy.pool import StaticPool
 from fastapi.testclient import TestClient
 import sys
 import os
+import uuid
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import Base, get_db
@@ -41,6 +42,9 @@ def test_client(db_session):
     with CustomTestClient(app) as test_client:
         yield test_client
 
+@pytest.fixture()
+def painting_id() -> uuid.UUID:
+    return str(uuid.uuid4())
 
 @pytest.fixture()
 def painting_payload():
@@ -52,15 +56,7 @@ def painting_payload():
         "type": "Impressionism"
     }
 
-@pytest.fixture()
-def painting_delete_payload():
-    return{
-        "name": "A Girl with Flowers on the Grass",
-        "painting_photo": "https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?q=80&w=2190&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "author": "Maris",
-        "price": 8000,
-        "type": "Impressionism"
-    }
+
 @pytest.fixture()
 def painting_update_payload():
     return{
