@@ -19,8 +19,8 @@ const PaintingItem = ({ painting, onClose }) => {
 
   const handleDelete = async () => {
     try {
-      console.log({ "painting_photo": painting.photo })
-      const response = await axios.delete('http://localhost:8000/paintings/delete', { data: { "painting_photo": painting.photo } });
+      console.log({ "id": painting.id })
+      const response = await axios.delete(`http://localhost:8000/paintings/delete/${painting.id}`);
       window.location.reload()
       console.log('Response:', response);
       // Дополнительные действия после успешного удаления
