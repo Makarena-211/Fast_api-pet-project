@@ -84,8 +84,6 @@ function Homepage() {
         <nav>
           <ul className="nav-list">
             {isAdmin && <li><a href="/create">Add</a></li>}
-            <li><a href="#">Ссылка 2</a></li>
-            <li><a href="#">Ссылка 3</a></li>
             <li><img src={settingsIcon} className="icon" /></li>
             <li><a href="/auth"><img src={accountIcon} className="icon" /></a></li>
           </ul>

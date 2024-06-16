@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles/modal.css';
 import trashIcon from './photos/trash-svgrepo-com.svg'
+import updateIcon from './photos/arrow-change-svgrepo-com.svg'
 import { useState, useEffect } from 'react';
 import {jwtDecode} from "jwt-decode";
 import axios from "axios";
@@ -29,6 +30,26 @@ const PaintingItem = ({ painting, onClose }) => {
     }
   };
 
+  const handleUpdate = async () => {
+    try {
+      const newPrice = prompt("Enter new price:");
+      if (newPrice) {
+        const updated_data = {
+          name: painting.name,
+          photo: painting.photo,
+          author: painting.author,
+          price: parseInt(newPrice),
+          type: painting.type
+        };
+        const response = await axios.put(`http://localhost:8000/paintings/update/${painting.id}`, updated_data);
+        window.location.reload();
+        console.log('Response:', response);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -38,7 +59,18 @@ const PaintingItem = ({ painting, onClose }) => {
           <p>Автор: {painting.author}</p>
           <p>Тип: {painting.type}</p>
           <p>Цена: {painting.price}$</p>
-          {isAdmin && <a onClick={handleDelete}><img src={trashIcon} className='trash'/></a>}
+          {isAdmin && (
+            <div className="update_button">
+              <a onClick={handleUpdate}>
+                <img src={updateIcon} className="update" alt="Update Icon" />
+              </a>
+            </div>
+          )}
+          {isAdmin && (
+            <a onClick={handleDelete}>
+              <img src={trashIcon} className="trash" alt="Trash Icon" />
+            </a>
+          )}
         </div>
         <img src={painting.photo} alt={painting.name} className="image" />
       </div>
