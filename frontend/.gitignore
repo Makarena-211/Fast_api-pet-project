@@ -68,3 +68,6 @@ coverage/
 
 # Кэш браузера
 .cache/
+
+#папка arg
+arg/
